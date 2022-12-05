@@ -19,7 +19,7 @@ let createExpeditionRoster: (expeditionId: number, adventurerId: number) => Prom
     = async function (expeditionId: number, adventurerId: number) {
     try {
         let conn = await getConnection();
-        let res = await conn.query("INSERT INTO expeditionRosters (exp_id, adv_id) VALUE (?,?)",
+        let res = await conn.query("INSERT INTO expedition_roster (exp_id, adv_id) VALUE (?,?)",
             [expeditionId, adventurerId]);
         await conn.commit();
         await conn.end();
@@ -80,7 +80,7 @@ let updateExpeditionRosterById: (id: number, expeditionId: number, adventurerId:
     = async function (id: number, expeditionId: number, adventurerId: number) {
     try {
         let conn = await getConnection();
-        let res = await conn.query("UPDATE expedition_rosters SET exp_id = ?, adv_id = ? WHERE id = ?",
+        let res = await conn.query("UPDATE expedition_roster SET exp_id = ?, adv_id = ? WHERE id = ?",
             [expeditionId, adventurerId, id]);
         await conn.commit();
         await conn.end();
