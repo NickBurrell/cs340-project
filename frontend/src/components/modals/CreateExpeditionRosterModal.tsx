@@ -34,11 +34,12 @@ function CreateExpeditionRosterModal(props: {expeditions: [Expedition], adventur
         <>
             <Modal show={props.isVisible} onHide={props.handleClose}>
                 <Modal.Header>
-                    <Modal.Title>Creating New ExpeditionRoster</Modal.Title>
+                    <Modal.Title>Creating New Expedition-Roster Association</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Form.Group>
+                            <Form.Label>Expedition</Form.Label>
                             <DropdownButton variant={"light"} id={"acq-edit-exp-drop"} title={expeditionDropdownTitle}
                                             onSelect={expeditionOnSelect}>
                                 {props.expeditions.map((exp, i) =>

@@ -11,8 +11,10 @@ function EditExpeditionRosterModal(props: {expeditionRoster: ExpeditionRoster, e
     const [expeditionId, setExpeditionId] = useState<number>(props.expeditionRoster.expeditionId);
     const [adventurerId, setAdventurerId] = useState<number>(props.expeditionRoster.adventurerId);
 
-    const [expeditionDropdownTitle, setExpeditionDropdownTitle] = useState<string>("Please select an Expedition" );
-    const [adventurerDropdownTitle, setAdventurerDropdownTitle] = useState<string>("Please select an Adventurer" );
+    const [expeditionDropdownTitle, setExpeditionDropdownTitle] = useState<string>(props.expeditions
+        .find(e => e.id == props.expeditionRoster.expeditionId)!.name ?? "Please select an Expedition" );
+    const [adventurerDropdownTitle, setAdventurerDropdownTitle] = useState<string>(props.adventurers
+        .find(e => e.id == props.expeditionRoster.adventurerId)?.name ?? "Please select an Adventurer" );
 
     const expeditionOnSelect = (id: string | null, _: any) => {
         console.log(id);
@@ -35,11 +37,12 @@ function EditExpeditionRosterModal(props: {expeditionRoster: ExpeditionRoster, e
         <>
             <Modal show={props.isVisible} onHide={props.handleClose}>
                 <Modal.Header>
-                    <Modal.Title>Creating New ExpeditionRoster</Modal.Title>
+                    <Modal.Title>Editing Expedition-Roster Association</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Form.Group>
+                            <Form.Label>Expedition</Form.Label>
                             <DropdownButton variant={"light"} id={"acq-edit-exp-drop"} title={expeditionDropdownTitle}
                                             onSelect={expeditionOnSelect}>
                                 {props.expeditions.map((exp, i) =>

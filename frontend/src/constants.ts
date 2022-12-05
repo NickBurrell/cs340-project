@@ -1,3 +1,3 @@
-const BACKEND_ENDPOINT: string = "${BACKEND_ENDPOINT}";
+const BACKEND_ENDPOINT: string = "http://localhost:3000";
 
 export default BACKEND_ENDPOINT;
