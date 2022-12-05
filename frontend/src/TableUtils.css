@@ -1,0 +1,23 @@
+/*
+ Inspiration for this CSS comes from https://litmus.com/community/discussions/8004-vertical-line-between-2-columns
+*/
+.table_line {
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: #000;
+}
+
+@media only screen and (max-width: 479px) {
+    .stack {
+        display:block!important;
+        width:auto;
+    }
+    .table_line {
+        width: auto;
+        display: block;
+        border-left-width: 0px;
+        border-top-width: 1px;
+        border-top-style: solid;
+        border-top-color: #000;
+    }
+}
