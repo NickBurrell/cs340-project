@@ -8,6 +8,7 @@ import CreateExpeditionRosterModal from "../components/modals/CreateExpeditionRo
 import Expedition from "../models/Expedition";
 import Adventurer from "../models/Adventurer";
 import expedition from "../models/Expedition";
+import BACKEND_ENDPOINT from "../constants";
 
 function ExpeditionRostersPage(props: {}) {
     // Use the history for updating
@@ -24,26 +25,26 @@ function ExpeditionRostersPage(props: {}) {
 
     // RETRIEVE the list of expeditionRoster
     const loadExpeditionRosters = async () => {
-        const response = await fetch('http://localhost:3001/expedition_roster');
+        const response = await fetch(`${BACKEND_ENDPOINT}/expedition_roster`);
         const expeditionRoster = await response.json();
         setExpeditionRosters(expeditionRoster);
     }
 
     // RETRIEVE the list of acquisitions
     const loadExpeditions = async () => {
-        const response = await fetch('http://localhost:3001/expedition');
+        const response = await fetch(`${BACKEND_ENDPOINT}/expedition`);
         const expeditions = await response.json();
         setExpeditions(expeditions);
     }
     // RETRIEVE the list of acquisitions
     const loadAdventurers = async () => {
-        const response = await fetch('http://localhost:3001/adventurer');
+        const response = await fetch(`${BACKEND_ENDPOINT}/adventurer`);
         const adventurers = await response.json();
         setAdventurers(adventurers);
     }
 
     const onExpeditionRosterCreate = async (expeditionRoster: ExpeditionRoster) => {
-        const resp = await fetch('http://localhost:3001/expeditionRoster', {
+        const resp = await fetch(`${BACKEND_ENDPOINT}/expeditionRoster`, {
             method: 'post',
             body: JSON.stringify(expeditionRoster),
             headers: {
@@ -52,7 +53,7 @@ function ExpeditionRostersPage(props: {}) {
         });
         if (resp.status === 201) {
             navigation('/expeditionRosters');
-            const resp = await fetch('http://localhost:3001/expeditionRoster');
+            const resp = await fetch(`${BACKEND_ENDPOINT}/expeditionRoster`);
             const json = await resp.json();
             setExpeditionRosters(json);
         } else {
@@ -63,14 +64,14 @@ function ExpeditionRostersPage(props: {}) {
 
     // UPDATE a expeditionRoster
     const onEditExpeditionRosters = async (expeditionRoster: ExpeditionRoster) => {
-        const resp = await fetch(`http://localhost:3001/expeditionRoster/${expeditionRoster.id}`, {
+        const resp = await fetch(`${BACKEND_ENDPOINT}/expeditionRoster/${expeditionRoster.id}`, {
             method: 'PUT',
             body: JSON.stringify(expeditionRoster),
             headers: {'Content-Type': 'application/json'},
         });
 
         if(resp.status === 204) {
-            const getResponse = await fetch('http://localhost:3001/expeditionRoster');
+            const getResponse = await fetch(`${BACKEND_ENDPOINT}/expeditionRoster`);
             const expeditionRoster = await getResponse.json();
             setExpeditionRosters(expeditionRoster);
         } else {
@@ -82,9 +83,9 @@ function ExpeditionRostersPage(props: {}) {
 
     // DELETE a expeditionRoster
     const onExpeditionRosterDelete = async (_id: number) => {
-        const response = await fetch(`http://localhost:3001/expeditionRoster/${_id}`, { method: 'DELETE' });
+        const response = await fetch(`${BACKEND_ENDPOINT}/expeditionRoster/${_id}`, { method: 'DELETE' });
         if (response.status === 204) {
-            const getResponse = await fetch('http://localhost:3001/expeditionRoster');
+            const getResponse = await fetch(`${BACKEND_ENDPOINT}/expeditionRoster`);
             const expeditionRoster = await getResponse.json();
             setExpeditionRosters(expeditionRoster);
         } else {

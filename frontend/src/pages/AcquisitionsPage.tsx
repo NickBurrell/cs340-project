@@ -7,6 +7,7 @@ import Adventurer from "../models/Adventurer";
 import Expedition from "../models/Expedition";
 import {Button, Container, Row} from "react-bootstrap";
 import CreateAcquisitionModal from "../components/modals/CreateAcquisitionModal";
+import BACKEND_ENDPOINT from "../constants";
 
 function AcquisitionsPage(props: {}) {
     // Use the history for updating
@@ -23,26 +24,26 @@ function AcquisitionsPage(props: {}) {
 
     // RETRIEVE the list of acquisitions
     const loadAcquisitions = async () => {
-        const response = await fetch('http://localhost:3001/acquisition');
+        const response = await fetch(`${BACKEND_ENDPOINT}/acquisition`);
         const acquisitions = await response.json();
         setAcquisitions(acquisitions);
     }
 
     // RETRIEVE the list of acquisitions
     const loadExpeditions = async () => {
-        const response = await fetch('http://localhost:3001/expedition');
+        const response = await fetch(`${BACKEND_ENDPOINT}/expedition`);
         const expeditions = await response.json();
         setExpeditions(expeditions);
     }
     // RETRIEVE the list of acquisitions
     const loadAdventurers = async () => {
-        const response = await fetch('http://localhost:3001/adventurer');
+        const response = await fetch(`${BACKEND_ENDPOINT}/adventurer`);
         const adventurers = await response.json();
         setAdventurers(adventurers);
     }
 
     const onAcquisitionCreate = async (acquisition: Acquisition) => {
-        const resp = await fetch('http://localhost:3001/acquisition', {
+        const resp = await fetch(`${BACKEND_ENDPOINT}/acquisition`, {
             method: 'post',
             body: JSON.stringify(acquisition),
             headers: {
@@ -51,7 +52,7 @@ function AcquisitionsPage(props: {}) {
         });
         if (resp.status === 201) {
             navigation('/acquisitions');
-            const resp = await fetch('http://localhost:3001/acquisition');
+            const resp = await fetch(`${BACKEND_ENDPOINT}/acquisition`);
             const json = await resp.json();
             setAcquisitions(json);
         } else {
@@ -62,14 +63,14 @@ function AcquisitionsPage(props: {}) {
 
     // UPDATE a acquisition
     const onEditAcquisitions = async (acquisition: Acquisition) => {
-        const resp = await fetch(`http://localhost:3001/acquisition/${acquisition.id}`, {
+        const resp = await fetch(`${BACKEND_ENDPOINT}/acquisition/${acquisition.id}`, {
             method: 'PUT',
             body: JSON.stringify(acquisition),
             headers: {'Content-Type': 'application/json'},
         });
 
         if(resp.status === 204) {
-            const getResponse = await fetch('http://localhost:3001/acquisition');
+            const getResponse = await fetch(`${BACKEND_ENDPOINT}/acquisition`);
             const acquisition = await getResponse.json();
             setAcquisitions(acquisition);
         } else {
@@ -81,9 +82,9 @@ function AcquisitionsPage(props: {}) {
 
     // DELETE a acquisition
     const onAcquisitionDelete = async (_id: number) => {
-        const response = await fetch(`http://localhost:3001/acquisition/${_id}`, {method: 'DELETE'});
+        const response = await fetch(`${BACKEND_ENDPOINT}/acquisition/${_id}`, {method: 'DELETE'});
         if (response.status === 204) {
-            const getResponse = await fetch('http://localhost:3001/acquisition');
+            const getResponse = await fetch(`${BACKEND_ENDPOINT}/acquisition`);
             const acquisition = await getResponse.json();
             setAcquisitions(acquisition);
         } else {

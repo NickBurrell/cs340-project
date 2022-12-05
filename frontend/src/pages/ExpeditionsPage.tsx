@@ -5,6 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import Expedition from "../models/Expedition";
 import {Button, Container, Row} from "react-bootstrap";
 import CreateExpeditionModal from "../components/modals/CreateExpeditionModal";
+import BACKEND_ENDPOINT from "../constants";
 
 function ExpeditionsPage(props: {}) {
     // Use the history for updating
@@ -18,13 +19,13 @@ function ExpeditionsPage(props: {}) {
     const handleClose = () => setShow(false);
     // RETRIEVE the list of expeditions
     const loadExpeditions = async () => {
-        const response = await fetch('http://localhost:3001/expedition');
+        const response = await fetch(`${BACKEND_ENDPOINT}/expedition`);
         const expeditions = await response.json();
         setExpeditions(expeditions);
     }
 
     const onExpeditionCreate = async (expedition: Expedition) => {
-        const resp = await fetch('http://localhost:3001/expedition', {
+        const resp = await fetch(`${BACKEND_ENDPOINT}/expedition`, {
             method: 'post',
             body: JSON.stringify(expedition),
             headers: {
@@ -33,7 +34,7 @@ function ExpeditionsPage(props: {}) {
         });
         if (resp.status === 201) {
             navigation('/expeditions');
-            const resp = await fetch('http://localhost:3001/expedition');
+            const resp = await fetch(`${BACKEND_ENDPOINT}/expedition`);
             const json = await resp.json();
             setExpeditions(json);
         } else {
@@ -44,14 +45,14 @@ function ExpeditionsPage(props: {}) {
 
     // UPDATE a expedition
     const onEditExpeditions = async (expedition: Expedition) => {
-        const resp = await fetch(`http://localhost:3001/expedition/${expedition.id}`, {
+        const resp = await fetch(`${BACKEND_ENDPOINT}/expedition/${expedition.id}`, {
             method: 'PUT',
             body: JSON.stringify(expedition),
             headers: {'Content-Type': 'application/json'},
         });
 
         if(resp.status === 204) {
-            const getResponse = await fetch('http://localhost:3001/expedition');
+            const getResponse = await fetch(`${BACKEND_ENDPOINT}/expedition`);
             const expedition = await getResponse.json();
             setExpeditions(expedition);
         } else {
@@ -63,9 +64,9 @@ function ExpeditionsPage(props: {}) {
 
     // DELETE a expedition
     const onExpeditionDelete = async (_id: number) => {
-        const response = await fetch(`http://localhost:3001/expedition/${_id}`, { method: 'DELETE' });
+        const response = await fetch(`${BACKEND_ENDPOINT}/expedition/${_id}`, { method: 'DELETE' });
         if (response.status === 204) {
-            const getResponse = await fetch('http://localhost:3001/expedition');
+            const getResponse = await fetch(`${BACKEND_ENDPOINT}/expedition`);
             const expedition = await getResponse.json();
             setExpeditions(expedition);
         } else {

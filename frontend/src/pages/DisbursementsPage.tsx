@@ -6,6 +6,7 @@ import Disbursement from "../models/Disbursement";
 import {Button, Container, Row} from "react-bootstrap";
 import CreateDisbursementModal from "../components/modals/CreateDisbursementModal";
 import Adventurer from "../models/Adventurer";
+import BACKEND_ENDPOINT from "../constants";
 
 function DisbursementsPage(props: {}) {
     // Use the history for updating
@@ -22,20 +23,20 @@ function DisbursementsPage(props: {}) {
 
     // RETRIEVE the list of disbursements
     const loadDisbursements = async () => {
-        const response = await fetch('http://localhost:3001/disbursement');
+        const response = await fetch(`${BACKEND_ENDPOINT}/disbursement`);
         const disbursements = await response.json();
         setDisbursements(disbursements);
     }
 
     // RETRIEVE the list of acquisitions
     const loadAdventurers = async () => {
-        const response = await fetch('http://localhost:3001/adventurer');
+        const response = await fetch(`${BACKEND_ENDPOINT}/adventurer`);
         const adventurers = await response.json();
         setAdventurers(adventurers);
     }
 
     const onDisbursementCreate = async (disbursement: Disbursement) => {
-        const resp = await fetch('http://localhost:3001/disbursement', {
+        const resp = await fetch(`${BACKEND_ENDPOINT}/disbursement`, {
             method: 'POST',
             body: JSON.stringify(disbursement),
             headers: {
@@ -44,11 +45,11 @@ function DisbursementsPage(props: {}) {
         });
         if (resp.status === 201) {
 
-            const resp = await fetch(`http://localhost:3001/adventurer/${disbursement.rosterId}`);
+            const resp = await fetch(`${BACKEND_ENDPOINT}/adventurer/${disbursement.rosterId}`);
             const adv = await resp.json();
             adv.dkp += disbursement.quantity;
             console.log(adv);
-            const updateResp = await fetch(`http://localhost:3001/adventurer/${disbursement.rosterId}`, {
+            const updateResp = await fetch(`${BACKEND_ENDPOINT}/adventurer/${disbursement.rosterId}`, {
                 method: 'PUT',
                 body: JSON.stringify(adv),
                 headers: {
@@ -56,7 +57,7 @@ function DisbursementsPage(props: {}) {
                 }
             });
             if(updateResp.status === 204) {
-                const resp = await fetch('http://localhost:3001/disbursement');
+                const resp = await fetch(`${BACKEND_ENDPOINT}/disbursement`);
                 const json = await resp.json();
                 navigation('/disbursements');
                 setDisbursements(json);
@@ -71,14 +72,14 @@ function DisbursementsPage(props: {}) {
 
     // UPDATE a disbursement
     const onEditDisbursements = async (disbursement: Disbursement) => {
-        const resp = await fetch(`http://localhost:3001/disbursement/${disbursement.id}`, {
+        const resp = await fetch(`${BACKEND_ENDPOINT}/disbursement/${disbursement.id}`, {
             method: 'PUT',
             body: JSON.stringify(disbursement),
             headers: {'Content-Type': 'application/json'},
         });
 
         if(resp.status === 204) {
-            const getResponse = await fetch('http://localhost:3001/disbursement');
+            const getResponse = await fetch(`${BACKEND_ENDPOINT}/disbursement`);
             const disbursement = await getResponse.json();
             setDisbursements(disbursement);
         } else {
@@ -90,9 +91,9 @@ function DisbursementsPage(props: {}) {
 
     // DELETE a disbursement
     const onDisbursementDelete = async (_id: number) => {
-        const response = await fetch(`http://localhost:3001/disbursement/${_id}`, { method: 'DELETE' });
+        const response = await fetch(`${BACKEND_ENDPOINT}/disbursement/${_id}`, { method: 'DELETE' });
         if (response.status === 204) {
-            const getResponse = await fetch('http://localhost:3001/disbursement');
+            const getResponse = await fetch(`${BACKEND_ENDPOINT}/disbursement`);
             const disbursement = await getResponse.json();
             setDisbursements(disbursement);
         } else {

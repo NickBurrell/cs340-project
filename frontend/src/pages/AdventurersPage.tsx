@@ -6,6 +6,7 @@ import Adventurer from "../models/Adventurer";
 import {Button, Container, Row} from "react-bootstrap";
 import CreateAdventurerModal from "../components/modals/CreateAdventurerModal";
 import {FaJediOrder} from "react-icons/all";
+import BACKEND_ENDPOINT from "../constants";
 
 function AdventurerPage(props: {}) {
     // Use the history for updating
@@ -20,14 +21,14 @@ function AdventurerPage(props: {}) {
 
     // RETRIEVE the list of adventurers
     const loadAdventurers = async () => {
-        const response = await fetch('http://localhost:3001/adventurer');
+        const response = await fetch(`${BACKEND_ENDPOINT}/adventurer`);
         const adventurers = await response.json();
         console.log(response);
         setAdventurers(adventurers);
     }
 
     const onAdventurerCreate = async (adventurer: Adventurer) => {
-        const resp = await fetch('http://localhost:3001/adventurer', {
+        const resp = await fetch(`${BACKEND_ENDPOINT}/adventurer`, {
             method: 'post',
             body: JSON.stringify(adventurer),
             headers: {
@@ -36,7 +37,7 @@ function AdventurerPage(props: {}) {
         });
         if (resp.status === 201) {
             navigation('/adventurers');
-            const resp = await fetch('http://localhost:3001/adventurer');
+            const resp = await fetch(`${BACKEND_ENDPOINT}/adventurer`);
             const json = await resp.json();
             setAdventurers(json);
         } else {
@@ -47,14 +48,14 @@ function AdventurerPage(props: {}) {
 
     // UPDATE a adventurer
     const onEditAdventurers = async (adventurer: Adventurer) => {
-        const resp = await fetch(`http://localhost:3001/adventurer/${adventurer.id}`, {
+        const resp = await fetch(`${BACKEND_ENDPOINT}/adventurer/${adventurer.id}`, {
             method: 'PUT',
             body: JSON.stringify(adventurer),
             headers: {'Content-Type': 'application/json'},
         });
 
         if(resp.status === 204) {
-            const getResponse = await fetch('http://localhost:3001/adventurer');
+            const getResponse = await fetch(`${BACKEND_ENDPOINT}/adventurer`);
             const adventurer = await getResponse.json();
             setAdventurers(adventurer);
         } else {
@@ -66,9 +67,9 @@ function AdventurerPage(props: {}) {
 
     // DELETE a adventurer
     const onAdventurerDelete = async (_id: number) => {
-        const response = await fetch(`http://localhost:3001/adventurer/${_id}`, { method: 'DELETE' });
+        const response = await fetch(`${BACKEND_ENDPOINT}/adventurer/${_id}`, { method: 'DELETE' });
         if (response.status === 204) {
-            const getResponse = await fetch('http://localhost:3001/adventurer');
+            const getResponse = await fetch(`${BACKEND_ENDPOINT}/adventurer`);
             const adventurer = await getResponse.json();
             setAdventurers(adventurer);
         } else {
