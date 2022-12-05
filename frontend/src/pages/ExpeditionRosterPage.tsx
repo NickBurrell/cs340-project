@@ -44,7 +44,7 @@ function ExpeditionRostersPage(props: {}) {
     }
 
     const onExpeditionRosterCreate = async (expeditionRoster: ExpeditionRoster) => {
-        const resp = await fetch(`${BACKEND_ENDPOINT}/expeditionRoster`, {
+        const resp = await fetch(`${BACKEND_ENDPOINT}/expedition_roster`, {
             method: 'post',
             body: JSON.stringify(expeditionRoster),
             headers: {
@@ -53,7 +53,7 @@ function ExpeditionRostersPage(props: {}) {
         });
         if (resp.status === 201) {
             navigation('/expeditionRosters');
-            const resp = await fetch(`${BACKEND_ENDPOINT}/expeditionRoster`);
+            const resp = await fetch(`${BACKEND_ENDPOINT}/expedition_roster`);
             const json = await resp.json();
             setExpeditionRosters(json);
         } else {
@@ -64,14 +64,14 @@ function ExpeditionRostersPage(props: {}) {
 
     // UPDATE a expeditionRoster
     const onEditExpeditionRosters = async (expeditionRoster: ExpeditionRoster) => {
-        const resp = await fetch(`${BACKEND_ENDPOINT}/expeditionRoster/${expeditionRoster.id}`, {
+        const resp = await fetch(`${BACKEND_ENDPOINT}/expedition_roster/${expeditionRoster.id}`, {
             method: 'PUT',
             body: JSON.stringify(expeditionRoster),
             headers: {'Content-Type': 'application/json'},
         });
 
         if(resp.status === 204) {
-            const getResponse = await fetch(`${BACKEND_ENDPOINT}/expeditionRoster`);
+            const getResponse = await fetch(`${BACKEND_ENDPOINT}/expedition_roster`);
             const expeditionRoster = await getResponse.json();
             setExpeditionRosters(expeditionRoster);
         } else {
@@ -83,9 +83,9 @@ function ExpeditionRostersPage(props: {}) {
 
     // DELETE a expeditionRoster
     const onExpeditionRosterDelete = async (_id: number) => {
-        const response = await fetch(`${BACKEND_ENDPOINT}/expeditionRoster/${_id}`, { method: 'DELETE' });
+        const response = await fetch(`${BACKEND_ENDPOINT}/expedition_roster/${_id}`, { method: 'DELETE' });
         if (response.status === 204) {
-            const getResponse = await fetch(`${BACKEND_ENDPOINT}/expeditionRoster`);
+            const getResponse = await fetch(`${BACKEND_ENDPOINT}/expedition_roster`);
             const expeditionRoster = await getResponse.json();
             setExpeditionRosters(expeditionRoster);
         } else {
