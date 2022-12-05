@@ -59,6 +59,7 @@ function ExpeditionRostersPage(props: {}) {
         } else {
             alert("Failure!");
         }
+        navigation('/expedition_rosters');
         console.log(expeditionRoster);
     }
 
@@ -78,7 +79,7 @@ function ExpeditionRostersPage(props: {}) {
             const err = await resp.json();
             alert(`Failed to update document. Status ${resp.status}: ${err.error}`);
         }
-        navigation('/expeditionRosters');
+        navigation('/expedition_rosters');
     }
 
     // DELETE a expeditionRoster
@@ -91,6 +92,7 @@ function ExpeditionRostersPage(props: {}) {
         } else {
             console.error(`Failed to delete expeditionRoster with _id = ${_id}, status code = ${response.status}`)
         }
+        navigation('/expedition_rosters');
     }
 
     // LOAD the expeditionRoster
