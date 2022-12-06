@@ -60,7 +60,7 @@ function EditAcquisitionModal(props: {acquisition: Acquisition, expeditions: [Ex
                 <Modal.Body>
                     <Form>
                         <Form.Group>
-                            <Form.Label>Expedition</Form.Label>
+                            <Form.Label>Expedition (Choosing N/A Nullifies the relation)</Form.Label>
                             <DropdownButton variant={"light"} id={"acq-edit-exp-drop"} title={expeditionDropdownTitle}
                                 onSelect={expeditionOnSelect}>
                                 <Dropdown.Item eventKey={"NULL"}>N/A</Dropdown.Item>
@@ -68,7 +68,7 @@ function EditAcquisitionModal(props: {acquisition: Acquisition, expeditions: [Ex
                                         <Dropdown.Item eventKey={exp.id} key={i.toString()}>{exp.name}</Dropdown.Item>
                                     )}
                             </DropdownButton>
-                            <Form.Label>Adventurer</Form.Label>
+                            <Form.Label>Adventurer (Choosing N/A Nullifies the relation)</Form.Label>
                             <DropdownButton variant={"light"} id={"acq-edit-adv-drop"} title={adventurerDropdownTitle}
                                             onSelect={adventurerOnSelect}>
                                 <Dropdown.Item eventKey={"NULL"}>N/A</Dropdown.Item>
@@ -82,7 +82,7 @@ function EditAcquisitionModal(props: {acquisition: Acquisition, expeditions: [Ex
                             <Form.Control type={"date"} value={truncDate(date)} onChange={e => setDate(new Date(e.target.value))}/>
                             <Form.Check type={'checkbox'} defaultChecked={sold} onChange={e => setSold(e.target.value === 'true')} label={"Sold"}/>
                             <Form.Label>Price</Form.Label>
-                            <Form.Control type={"number"} value={(price??"0").toString()} onChange={e => setPrice(parseFloat(e.target.value))}/>
+                            <Form.Control type={"number"} value={price?.toString()} onChange={e => parseInt(e.target.value)}/>
 
                         </Form.Group>
                     </Form>

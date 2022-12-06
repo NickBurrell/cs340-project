@@ -91,7 +91,7 @@ function CreateDisbursementModal(props: {expeditions: [Expedition], adventurers:
                         Cancel
                     </Button>
                     <Button variant={"primary"} onClick={saveAndClose} type={"submit"}>
-                        Add Adventurer
+                        Add Disbursement
                     </Button>
                 </Modal.Footer>
             </Modal>
