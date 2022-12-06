@@ -5,8 +5,9 @@ import EditDisbursementModal from "./modals/EditDisbursementModal";
 import DeleteDisbursementModal from "./modals/DeleteDisbursementModal";
 import Adventurer from "../models/Adventurer";
 import truncDate from "../util";
+import Expedition from "../models/Expedition";
 
-function DisbursementEntry( props: {disbursement: Disbursement, adventurers: [Adventurer], onEdit: Function, onDelete: Function} ) {
+function DisbursementEntry( props: {disbursement: Disbursement, expeditions: [Expedition], adventurers: [Adventurer], onEdit: Function, onDelete: Function} ) {
 
     const [showEdit, setShowEdit] = useState<boolean>(false);
     const [showDelete, setShowDelete] = useState<boolean>(false);
@@ -26,8 +27,10 @@ function DisbursementEntry( props: {disbursement: Disbursement, adventurers: [Ad
             <td>{props.disbursement.quantity.toString()}</td>
             <td><TbTrash onClick={() => handleDeleteShow()} /></td>
             <td><TbEditCircle onClick={() => handleEditShow()} /></td>
-            <EditDisbursementModal disbursement={props.disbursement} adventurers={props.adventurers} isVisible={showEdit} handleClose={handleEditClose} onEdit={props.onEdit}/>
-            <DeleteDisbursementModal disbursement={props.disbursement} isVisible={showDelete} handleClose={handleDeleteClose} onDelete={props.onDelete}/>
+            <EditDisbursementModal disbursement={props.disbursement} expeditions={props.expeditions} adventurers={props.adventurers}
+                                   isVisible={showEdit} handleClose={handleEditClose} onEdit={props.onEdit}/>
+            <DeleteDisbursementModal disbursement={props.disbursement}
+                                     isVisible={showDelete} handleClose={handleDeleteClose} onDelete={props.onDelete}/>
         </tr>
     );
 }

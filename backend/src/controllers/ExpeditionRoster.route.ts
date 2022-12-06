@@ -5,7 +5,7 @@ import {
     getAllExpeditionRosters,
     getExpeditionRosterByAdventurerName,
     getExpeditionRosterByExpeditionAndAdventurer,
-    getExpeditionRosterByExpeditionName,
+    getExpeditionRosterByExpeditionName, getExpeditionRosterById,
     updateExpeditionRosterById
 } from "../models/ExpeditionRoster.model";
 
@@ -48,6 +48,15 @@ expeditionRosterRouter.get('/expedition_roster', (req, res) => {
     });
 });
 
+
+expeditionRosterRouter.get('/:id', (req, res) => {
+    getExpeditionRosterById((req.params as any).id).then(exps => {
+        res.send(exps)
+    }).catch(error => {
+        console.error(error);
+        res.send({Error: "Request to retrieve expeditionRosters failed"});
+    });
+});
 
 expeditionRosterRouter.post('/', (req, res) => {
     console.log(req.body);

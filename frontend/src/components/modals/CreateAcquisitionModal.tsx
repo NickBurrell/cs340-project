@@ -6,7 +6,7 @@ import Expedition from "../../models/Expedition";
 import Adventurer from "../../models/Adventurer";
 import truncDate from "../../util";
 
-function CreateAcqusitionModal(props: {expeditions: [Expedition], adventurers: [Adventurer], isVisible: boolean, handleClose: () => void, onCreate: Function}) {
+function CreateAcquisitionModal(props: {expeditions: [Expedition], adventurers: [Adventurer], isVisible: boolean, handleClose: () => void, onCreate: Function}) {
 
     const [expeditionId, setExpeditionId] = useState<number | null>(0);
     const [adventurerId, setAdventurerId] = useState<number | null>(0);
@@ -98,4 +98,4 @@ function CreateAcqusitionModal(props: {expeditions: [Expedition], adventurers: [
     )
 }
 
-export default CreateAcqusitionModal;
+export default CreateAcquisitionModal;

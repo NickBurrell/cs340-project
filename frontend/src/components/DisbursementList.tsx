@@ -4,8 +4,9 @@ import DisbursementEntry from "./DisbursementEntry";
 import {Table} from "react-bootstrap";
 import adventurer from "../models/Adventurer";
 import Adventurer from "../models/Adventurer";
+import Expedition from "../models/Expedition";
 
-function DisbursementList( props: {disbursements: [Disbursement], adventurers: [Adventurer], onEdit: Function, onDelete: Function} ) {
+function DisbursementList( props: {disbursements: [Disbursement], expeditions: [Expedition], adventurers: [Adventurer], onEdit: Function, onDelete: Function} ) {
     return (
         <Table>
             <caption>List of Disbursements</caption>
@@ -23,7 +24,8 @@ function DisbursementList( props: {disbursements: [Disbursement], adventurers: [
             <tbody>
             {
                 props.disbursements.map((adv: Disbursement, i: number) =>
-                    <DisbursementEntry disbursement={adv} adventurers={props.adventurers} onEdit={props.onEdit} onDelete={props.onDelete} key={i.toString()}/>
+                    <DisbursementEntry disbursement={adv} expeditions={props.expeditions} adventurers={props.adventurers}
+                                       onEdit={props.onEdit} onDelete={props.onDelete} key={i.toString()}/>
             )}
             </tbody>
         </Table>

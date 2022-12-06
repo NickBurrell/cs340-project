@@ -7,6 +7,8 @@ import {Button, Container, Row} from "react-bootstrap";
 import CreateDisbursementModal from "../components/modals/CreateDisbursementModal";
 import Adventurer from "../models/Adventurer";
 import BACKEND_ENDPOINT from "../constants";
+import Expedition from "../models/Expedition";
+import ExpeditionRoster from "../models/ExpeditionRoster";
 
 function DisbursementsPage(props: {}) {
     // Use the history for updating
@@ -15,6 +17,7 @@ function DisbursementsPage(props: {}) {
     // Use state to bring in the data
     const [disbursements, setDisbursements] = useState<[Disbursement]>([] as unknown as [Disbursement]);
     const [adventurers, setAdventurers] = useState<[Adventurer]>([] as unknown as [Adventurer]);
+    const [expeditions, setExpeditions] = useState<[Expedition]>([] as unknown as [Expedition]);
 
     const [show, setShow] = useState<boolean>(false);
 
@@ -28,11 +31,18 @@ function DisbursementsPage(props: {}) {
         setDisbursements(disbursements);
     }
 
-    // RETRIEVE the list of acquisitions
+    // RETRIEVE the list of adventurers
     const loadAdventurers = async () => {
         const response = await fetch(`${BACKEND_ENDPOINT}/adventurer`);
         const adventurers = await response.json();
         setAdventurers(adventurers);
+    }
+
+    // RETRIEVE the list of acquisitions
+    const loadExpeditions = async () => {
+        const response = await fetch(`${BACKEND_ENDPOINT}/expedition`);
+        const expeditions = await response.json();
+        setExpeditions(expeditions);
     }
 
     const onDisbursementCreate = async (disbursement: Disbursement) => {
@@ -44,26 +54,10 @@ function DisbursementsPage(props: {}) {
             },
         });
         if (resp.status === 201) {
-
-            const resp = await fetch(`${BACKEND_ENDPOINT}/adventurer/${disbursement.rosterId}`);
-            const adv = await resp.json();
-            adv.dkp += disbursement.quantity;
-            console.log(adv);
-            const updateResp = await fetch(`${BACKEND_ENDPOINT}/adventurer/${disbursement.rosterId}`, {
-                method: 'PUT',
-                body: JSON.stringify(adv),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            });
-            if(updateResp.status === 204) {
-                const resp = await fetch(`${BACKEND_ENDPOINT}/disbursement`);
-                const json = await resp.json();
-                navigation('/disbursements');
-                setDisbursements(json);
-            } else {
-                alert("Failed to update DKP");
-            }
+            const resp = await fetch(`${BACKEND_ENDPOINT}/disbursement`);
+            const json = await resp.json();
+            navigation('/disbursements');
+            setDisbursements(json);
         } else {
             alert("Failure!");
         }
@@ -103,6 +97,7 @@ function DisbursementsPage(props: {}) {
 
     // LOAD the disbursements
     useEffect(() => {
+        loadExpeditions();
         loadAdventurers();
         loadDisbursements();
     }, []);
@@ -122,13 +117,15 @@ function DisbursementsPage(props: {}) {
                     <Row>
                         <DisbursementList
                             disbursements={disbursements}
+                            expeditions={expeditions}
                             adventurers={adventurers}
                             onEdit={onEditDisbursements}
                             onDelete={onDisbursementDelete}/>
                     </Row>
                 </article>
             </Container>
-            <CreateDisbursementModal isVisible={show} handleClose={handleClose} onCreate={onDisbursementCreate} adventurers={adventurers}/>
+            <CreateDisbursementModal isVisible={show} handleClose={handleClose} onCreate={onDisbursementCreate} expeditions={expeditions}
+                                     adventurers={adventurers}/>
         </>
     );
 }

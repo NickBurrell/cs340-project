@@ -92,7 +92,7 @@ function EditAcquisitionModal(props: {acquisition: Acquisition, expeditions: [Ex
                         Cancel
                     </Button>
                     <Button variant={"primary"} onClick={saveAndClose} type={"submit"}>
-                        Add Acquisition
+                        Save Changes
                     </Button>
                 </Modal.Footer>
             </Modal>

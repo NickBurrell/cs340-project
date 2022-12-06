@@ -64,7 +64,7 @@ function EditExpeditionRosterModal(props: {expeditionRoster: ExpeditionRoster, e
                         Cancel
                     </Button>
                     <Button variant={"primary"} onClick={saveAndClose} type={"submit"}>
-                        Add Expedition Roster
+                        Save Changes
                     </Button>
                 </Modal.Footer>
             </Modal>
