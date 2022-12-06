@@ -3,7 +3,7 @@ import DisbursementList from '../components/DisbursementList';
 import { useState, useEffect } from 'react';
 import {useNavigate} from 'react-router-dom';
 import Disbursement from "../models/Disbursement";
-import {Button, Container, Row} from "react-bootstrap";
+import {Alert, Button, Container, Row} from "react-bootstrap";
 import CreateDisbursementModal from "../components/modals/CreateDisbursementModal";
 import Adventurer from "../models/Adventurer";
 import BACKEND_ENDPOINT from "../constants";
@@ -122,6 +122,7 @@ function DisbursementsPage(props: {}) {
                             onDelete={onDisbursementDelete}/>
                     </Row>
                 </article>
+                <Row><Alert variant={"warning"}>This is is in very early alpha stages. The application works in its entirety, but there are many more planned features. Note that this site does not work on Internet Explorer. Please use Firefox or Google Chrome. </Alert></Row>
             </Container>
             <CreateDisbursementModal isVisible={show} handleClose={handleClose} onCreate={onDisbursementCreate} expeditions={expeditions}
                                      adventurers={adventurers}/>

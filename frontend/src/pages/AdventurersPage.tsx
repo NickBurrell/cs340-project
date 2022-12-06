@@ -3,7 +3,7 @@ import AdventurerList from '../components/AdventurerList';
 import { useState, useEffect } from 'react';
 import {useNavigate} from 'react-router-dom';
 import Adventurer from "../models/Adventurer";
-import {Button, Container, Row} from "react-bootstrap";
+import {Alert, Button, Container, Row} from "react-bootstrap";
 import CreateAdventurerModal from "../components/modals/CreateAdventurerModal";
 import {FaJediOrder} from "react-icons/all";
 import BACKEND_ENDPOINT from "../constants";
@@ -99,6 +99,7 @@ function AdventurerPage(props: {}) {
                 />
                 </Row>
             </article>
+                <Row><Alert variant={"warning"}>This is is in very early alpha stages. The application works in its entirety, but there are many more planned features. Note that this site does not work on Internet Explorer. Please use Firefox or Google Chrome. </Alert></Row>
             </Container>
             <CreateAdventurerModal isVisible={show} handleClose={handleClose} onCreate={onAdventurerCreate}/>
         </>

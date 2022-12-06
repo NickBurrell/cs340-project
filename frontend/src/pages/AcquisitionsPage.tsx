@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import Acquisition from "../models/Acquisition";
 import Adventurer from "../models/Adventurer";
 import Expedition from "../models/Expedition";
-import {Button, Container, Row} from "react-bootstrap";
+import {Alert, Button, Container, Row} from "react-bootstrap";
 import CreateAcquisitionModal from "../components/modals/CreateAcquisitionModal";
 import BACKEND_ENDPOINT from "../constants";
 
@@ -119,7 +119,8 @@ function AcquisitionsPage(props: {}) {
                             onDelete={onAcquisitionDelete}
                         />
                     </Row>
-                </article>     
+                </article>
+                <Row><Alert variant={"warning"}>This is is in very early alpha stages. The application works in its entirety, but there are many more planned features. Note that this site does not work on Internet Explorer. Please use Firefox or Google Chrome. </Alert></Row>
             </Container>
             <CreateAcquisitionModal isVisible={show} handleClose={handleClose}
                                     onCreate={onAcquisitionCreate} adventurers={adventurers} expeditions={expeditions}/>

@@ -3,7 +3,7 @@ import ExpeditionList from '../components/ExpeditionList';
 import { useState, useEffect } from 'react';
 import {useNavigate} from 'react-router-dom';
 import Expedition from "../models/Expedition";
-import {Button, Container, Row} from "react-bootstrap";
+import {Alert, Button, Container, Row} from "react-bootstrap";
 import CreateExpeditionModal from "../components/modals/CreateExpeditionModal";
 import BACKEND_ENDPOINT from "../constants";
 
@@ -96,6 +96,7 @@ function ExpeditionsPage(props: {}) {
                             onDelete={onExpeditionDelete}/>
                     </Row>
                 </article>
+                <Row><Alert variant={"warning"}>This is is in very early alpha stages. The application works in its entirety, but there are many more planned features. Note that this site does not work on Internet Explorer. Please use Firefox or Google Chrome. </Alert></Row>
             </Container>
             <CreateExpeditionModal isVisible={show} handleClose={handleClose} onCreate={onExpeditionCreate}/>
         </>

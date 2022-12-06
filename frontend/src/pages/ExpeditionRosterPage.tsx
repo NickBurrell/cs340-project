@@ -3,7 +3,7 @@ import ExpeditionRosterList from '../components/ExpeditionRosterList';
 import { useState, useEffect } from 'react';
 import {useNavigate} from 'react-router-dom';
 import ExpeditionRoster from "../models/ExpeditionRoster";
-import {Button, Col, Container, FloatingLabel, Form, InputGroup, Row} from "react-bootstrap";
+import {Alert, Button, Col, Container, FloatingLabel, Form, InputGroup, Row} from "react-bootstrap";
 import CreateExpeditionRosterModal from "../components/modals/CreateExpeditionRosterModal";
 import Expedition from "../models/Expedition";
 import Adventurer from "../models/Adventurer";
@@ -169,6 +169,7 @@ function ExpeditionRostersPage(props: {}) {
                         onDelete={onExpeditionRosterDelete}/>
                     </Row>
                 </article>
+                <Row><Alert variant={"warning"}>This is is in very early alpha stages. The application works in its entirety, but there are many more planned features. Note that this site does not work on Internet Explorer. Please use Firefox or Google Chrome. </Alert></Row>
             </Container>
             <CreateExpeditionRosterModal isVisible={show} expeditions={expeditions} adventurers={adventurers}
                                          handleClose={handleClose} onCreate={onExpeditionRosterCreate}/>
