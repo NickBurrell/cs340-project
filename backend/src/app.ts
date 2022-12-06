@@ -10,6 +10,17 @@ import expeditionRouter from "./controllers/Expedition.route";
 dotenv.config();
 const app: Express = express();
 const port = process.env.SERVER_PORT;
+
+if (process.env.DB_USER === "") {
+    console.log("No Database User specified. Exiting.");
+    process.exit();
+}
+
+if (process.env.DB_PASSWORD === "") {
+    console.log("No Database User specified. Exiting.");
+    process.exit();
+}
+
 app.use(express.json());
 
 app.use(function(req,res,next) {
