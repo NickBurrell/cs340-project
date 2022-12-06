@@ -39,7 +39,6 @@ expeditionRosterRouter.get('/expeditions', (req, res) => {
 });
 
 expeditionRosterRouter.get('/expedition_roster', (req, res) => {
-    console.log(req.query);
     getExpeditionRosterByExpeditionAndAdventurer((req.query as any).exp_name, (req.query as any).adv_name).then(exps => {
         res.send(exps)
     }).catch(error => {
@@ -59,7 +58,7 @@ expeditionRosterRouter.get('/:id', (req, res) => {
 });
 
 expeditionRosterRouter.post('/', (req, res) => {
-    console.log(req.body);
+    
     createExpeditionRoster(req.body.expeditionId, req.body.adventurerId)
         .then(adv => {
             res.status(201).json(Number(adv))

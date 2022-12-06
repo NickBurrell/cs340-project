@@ -40,7 +40,6 @@ function ExpeditionsPage(props: {}) {
         } else {
             alert("Failure!");
         }
-        console.log(expedition);
     }
 
     // UPDATE a expedition

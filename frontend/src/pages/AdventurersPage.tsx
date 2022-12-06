@@ -42,7 +42,6 @@ function AdventurerPage(props: {}) {
         } else {
             alert("Failure!");
         }
-        console.log(adventurer);
     }
 
     // UPDATE a adventurer

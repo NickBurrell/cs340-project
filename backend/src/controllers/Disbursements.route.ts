@@ -17,7 +17,7 @@ disbursementRouter.get('/', (req, res) => {
 });
 
 disbursementRouter.post('/', (req, res) => {
-    console.log(req.body);
+    
     createDisbursement(req.body.rosterId, new Date(req.body.date), req.body.quantity)
         .then(adv => {
             res.status(201).json(Number(adv))

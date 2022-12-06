@@ -27,7 +27,7 @@ adventurerRouter.get('/:_id', (req, res) => {
 });
 
 adventurerRouter.post('/', (req, res) => {
-    console.log(req.body);
+    
     createAdventurer(req.body.name, req.body.job, req.body.rank, req.body.dkp)
         .then(adv => {
             res.status(201).json(Number(adv))

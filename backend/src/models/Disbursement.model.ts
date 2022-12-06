@@ -45,7 +45,6 @@ let getAllDisbursements: () => Promise<[DisbursementModel]> = async function() {
             "ORDER BY disbursements.id ASC");
         await conn.end();
         return rows.map(function(row: any, _: number) {
-            console.log(row);
             return {
                 id: row.id,
                 rosterId: row.roster_id,

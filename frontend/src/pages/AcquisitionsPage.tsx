@@ -26,7 +26,6 @@ function AcquisitionsPage(props: {}) {
     const loadAcquisitions = async () => {
         const response = await fetch(`${BACKEND_ENDPOINT}/acquisition`);
         const acquisitions = await response.json();
-        console.log(acquisitions)
         setAcquisitions(acquisitions);
     }
 
@@ -59,7 +58,6 @@ function AcquisitionsPage(props: {}) {
         } else {
             alert("Failure!");
         }
-        console.log(acquisition);
     }
 
     // UPDATE a acquisition

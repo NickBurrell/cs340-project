@@ -17,7 +17,6 @@ function EditExpeditionRosterModal(props: {expeditionRoster: ExpeditionRoster, e
         .find(e => e.id == props.expeditionRoster.adventurerId)?.name ?? "Please select an Adventurer" );
 
     const expeditionOnSelect = (id: string | null, _: any) => {
-        console.log(id);
         let exp = props.expeditions.find(e => e.id == parseInt(id!));
         setExpeditionId(exp!.id);
         setExpeditionDropdownTitle(exp!.name);

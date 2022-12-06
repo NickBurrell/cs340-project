@@ -43,7 +43,6 @@ let getAllExpeditionRosters: () => Promise<[ExpeditionRosterModel]> = async func
             "ORDER BY expedition_roster.id ASC");
         await conn.end();
         return rows.map(function(row: any, _: number) {
-            console.log(row);
             return {
                 id: row.id,
                 expeditionId: row.exp_id,

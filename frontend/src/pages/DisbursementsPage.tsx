@@ -61,7 +61,6 @@ function DisbursementsPage(props: {}) {
         } else {
             alert("Failure!");
         }
-        console.log(disbursement);
     }
 
     // UPDATE a disbursement

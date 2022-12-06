@@ -45,7 +45,7 @@ let getAllAcquisitions: () => Promise<[AcquisitionModel]> = async function() {
             "ORDER BY acquisitions.id ASC");
         await conn.end();
         return rows.map(function(row: any, _: number) {
-            console.log(row);
+            
             return {
                 id: row.id,
                 expeditionId: row.exp_id,

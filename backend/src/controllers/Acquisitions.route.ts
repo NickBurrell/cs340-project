@@ -18,7 +18,7 @@ acquisitionRouter.get('/', (req, res) => {
 });
 
 acquisitionRouter.post('/', (req, res) => {
-    console.log(req.body);
+    
     createAcquisition(req.body.expeditionId, req.body.adventurerId, req.body.name, new Date(req.body.date), req.body.sold, req.body.price)
         .then(adv => {
             res.status(201).json(Number(adv))

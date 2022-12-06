@@ -47,7 +47,6 @@ function CreateDisbursementModal(props: {expeditions: [Expedition], adventurers:
                     adv_name: adventurerDropdownTitle
                 })}`);
             const expeditionRoster = await response.json();
-            console.log(expeditionRoster);
             if (expeditionRoster.length >= 1) {
                 props.onCreate({id: 0, rosterId: expeditionRoster[0].id, date, quantity});
                 props.handleClose();

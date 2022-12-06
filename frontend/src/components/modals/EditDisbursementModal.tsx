@@ -48,7 +48,6 @@ function EditDisbursementModal(props: {disbursement: Disbursement, expeditions: 
         const response = await fetch(
             `${BACKEND_ENDPOINT}/expedition_roster/expedition_roster?${new URLSearchParams({exp_name: expeditionDropdownTitle, adv_name: adventurerDropdownTitle})}`);
         const roster = await response.json();
-        console.log(roster);
         if (roster.length >= 1) {
             props.onEdit({id: props.disbursement.id, rosterId: roster[0].id, date, quantity});
             props.handleClose();

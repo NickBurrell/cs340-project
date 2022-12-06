@@ -39,7 +39,7 @@ let getAllAdventurers: () => Promise<[AdventurerModel]> = async function() {
         let rows = await conn.query("SELECT * from adventurers");
         await conn.end();
         return rows.map(function(row: any, _: number) {
-            console.log(row);
+            
             return {
                 id: row.id,
                 name: row.name,

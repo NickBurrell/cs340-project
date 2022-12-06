@@ -69,7 +69,6 @@ function ExpeditionRostersPage(props: {}) {
             alert("Failure!");
         }
         navigation('/expedition_rosters');
-        console.log(expeditionRoster);
     }
 
     // UPDATE a expeditionRoster

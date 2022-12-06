@@ -19,7 +19,6 @@ expeditionRouter.get('/', (req, res) => {
 });
 
 expeditionRouter.post('/', (req, res) => {
-    console.log(req.body);
     createExpedition(req.body.name, new Date(req.body.date))
         .then(adv => {
             res.status(201).json(Number(adv))
