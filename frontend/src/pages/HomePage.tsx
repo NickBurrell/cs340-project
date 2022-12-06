@@ -19,7 +19,8 @@ function HomePage(props: {}) {
                 </Row>
                 <Row>
                     <Alert variant={"warning"}>This is is in very early alpha stages. The application works in its entirety,
-                        but there are many more planned features.</Alert>
+                        but there are many more planned features. Note that this site does not work on Internet Explorer.
+                    Please use Firefox or Google Chrome. </Alert>
                 </Row>
                 </Container>
             </article>
