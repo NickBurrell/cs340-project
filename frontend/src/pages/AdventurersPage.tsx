@@ -23,7 +23,6 @@ function AdventurerPage(props: {}) {
     const loadAdventurers = async () => {
         const response = await fetch(`${BACKEND_ENDPOINT}/adventurer`);
         const adventurers = await response.json();
-        console.log(response);
         setAdventurers(adventurers);
     }
 

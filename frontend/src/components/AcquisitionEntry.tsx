@@ -6,6 +6,7 @@ import DeleteAcquisitionModal from "./modals/DeleteAcquisitionModal";
 import Expedition from "../models/Expedition";
 import Adventurer from "../models/Adventurer";
 import truncDate from "../util";
+import acquisition from "../models/Acquisition";
 
 function AcquisitionEntry( props: {acquisition: Acquisition, expeditions: [Expedition], adventurers: [Adventurer], onEdit: Function, onDelete: Function} ) {
 
@@ -21,11 +22,11 @@ function AcquisitionEntry( props: {acquisition: Acquisition, expeditions: [Exped
     return (
         <tr>
             <td>{props.acquisition.id.toString()}</td>
-            <td>{props.acquisition.expeditionId??"N/A"}</td>
-            <td>{props.acquisition.adventurerId??"N/A"}</td>
+            <td>{props.acquisition.expeditionName??"N/A"}</td>
+            <td>{props.acquisition.adventurerName??"N/A"}</td>
             <td>{props.acquisition.name}</td>
             <td>{truncDate((props.acquisition.date??new Date()))}</td>
-            <td>{props.acquisition.sold ? 'true' : 'false'}</td>
+            <td>{props.acquisition.sold ? 'Yes' : 'No'}</td>
             <td>{props.acquisition.price??"Not Listed"}</td>
 
             <td><TbTrash onClick={() => handleDeleteShow()} /></td>

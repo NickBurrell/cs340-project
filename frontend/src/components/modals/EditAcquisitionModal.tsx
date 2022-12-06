@@ -16,33 +16,46 @@ function EditAcquisitionModal(props: {acquisition: Acquisition, expeditions: [Ex
     const [price, setPrice] = useState<number | null>(props.acquisition.price);
 
     const [expeditionDropdownTitle, setExpeditionDropdownTitle] = useState<string>(props.expeditions
-        .find(e => e.id == props.acquisition.expeditionId)!.name ?? "Please select an Expedition" );
+        .find(e => e.id == props.acquisition.expeditionId)?.name ?? "Please select an Expedition" );
     const [adventurerDropdownTitle, setAdventurerDropdownTitle] = useState<string>(props.adventurers
         .find(e => e.id == props.acquisition.adventurerId)?.name ?? "Please select an Adventurer" );
 
     const expeditionOnSelect = (id: string | null, _: any) => {
-        console.log(id);
-        let exp = props.expeditions.find(e => e.id == parseInt(id!));
-        setExpeditionId(exp!.id);
-        setExpeditionDropdownTitle(exp!.name);
+        if (id === "NULL") {
+            setExpeditionId(null);
+            setExpeditionDropdownTitle("N/A");
+        } else {
+            let exp = props.expeditions.find(e => e.id == parseInt(id!));
+            setExpeditionId(exp!.id);
+            setExpeditionDropdownTitle(exp!.name);
+        }
     }
 
     const adventurerOnSelect = (id: string | null, _: any) => {
-        let exp = props.adventurers.find(e => e.id == parseInt(id!));
-        setAdventurerId(exp!.id);
-        setAdventurerDropdownTitle(exp!.name);
+        if(id === "NULL") {
+            setAdventurerId(null);
+            setAdventurerDropdownTitle("N/A");
+        } else {
+            let exp = props.adventurers.find(e => e.id == parseInt(id!));
+            setAdventurerId(exp!.id);
+            setAdventurerDropdownTitle(exp!.name);
+        }
     }
 
     let saveAndClose = () => {
-        props.onEdit({id:props.acquisition.id, expeditionId, adventurerId, name, date, sold, price});
-        props.handleClose();
+        if (name === "NULL") {
+            alert(`Name cannot be "NULL"`);
+        } else {
+            props.onEdit({id: props.acquisition.id, expeditionId, adventurerId, name, date, sold, price});
+            props.handleClose();
+        }
     }
 
     return(
         <>
             <Modal show={props.isVisible} onHide={props.handleClose}>
                 <Modal.Header>
-                    <Modal.Title>Creating New Acquisition</Modal.Title>
+                    <Modal.Title>Editting Acquisition</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -50,13 +63,15 @@ function EditAcquisitionModal(props: {acquisition: Acquisition, expeditions: [Ex
                             <Form.Label>Expedition</Form.Label>
                             <DropdownButton variant={"light"} id={"acq-edit-exp-drop"} title={expeditionDropdownTitle}
                                 onSelect={expeditionOnSelect}>
-                                    {props.expeditions.map((exp, i) =>
+                                <Dropdown.Item eventKey={"NULL"}>N/A</Dropdown.Item>
+                                {props.expeditions.map((exp, i) =>
                                         <Dropdown.Item eventKey={exp.id} key={i.toString()}>{exp.name}</Dropdown.Item>
                                     )}
                             </DropdownButton>
                             <Form.Label>Adventurer</Form.Label>
                             <DropdownButton variant={"light"} id={"acq-edit-adv-drop"} title={adventurerDropdownTitle}
                                             onSelect={adventurerOnSelect}>
+                                <Dropdown.Item eventKey={"NULL"}>N/A</Dropdown.Item>
                                 {props.adventurers.map((adv, i) =>
                                     <Dropdown.Item eventKey={adv.id} key={i.toString()}>{adv.name}</Dropdown.Item>
                                 )}

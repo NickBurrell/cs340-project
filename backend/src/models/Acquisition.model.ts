@@ -38,7 +38,11 @@ let createAcquisition: (expeditionId: number|null, adventurerId: number|null, na
 let getAllAcquisitions: () => Promise<[AcquisitionModel]> = async function() {
     try {
         let conn = await getConnection();
-        let rows = await conn.query("SELECT * from acquisitions");
+        let rows = await conn.query("SELECT acquisitions.id, acquisitions.name, acquisitions.date, acquisitions.exp_id, " +
+            "acquisitions.adv_id, acquisitions.price, expeditions.name AS exp_name, adventurers.name AS adv_name FROM acquisitions " +
+            "LEFT JOIN expeditions ON acquisitions.exp_id = expeditions.id " +
+            "LEFT JOIN adventurers ON acquisitions.adv_id = adventurers.id " +
+            "ORDER BY acquisitions.id ASC");
         await conn.end();
         return rows.map(function(row: any, _: number) {
             console.log(row);
@@ -46,6 +50,8 @@ let getAllAcquisitions: () => Promise<[AcquisitionModel]> = async function() {
                 id: row.id,
                 expeditionId: row.exp_id,
                 adventurerId: row.adv_id,
+                expeditionName: row.exp_name,
+                adventurerName: row.adv_name,
                 name: row.name,
                 date: new Date(row.date),
                 sold: row.sold,
@@ -61,13 +67,19 @@ let getAllAcquisitions: () => Promise<[AcquisitionModel]> = async function() {
 let getAcquisitionById: (id: number) => Promise<AcquisitionModel|null> = async function(id: number) {
     try {
         let conn = await getConnection();
-        let rows = await conn.query("SELECT * FROM acquisitions WHERE id = ?", id);
+        let rows = await conn.query("SELECT acquisitions.id, acquisitions.exp_id, acquisitions.adv_id, " +
+            "acquisitions.date, acquisitions.price, expeditions.name AS exp_name, adventurers.name AS adv_name FROM acquisitions " +
+            "LEFT JOIN expeditions ON acquisitions.exp_id = expeditions.id " +
+            "LEFT JOIN adventurers ON acquisitions.adv_id = adventurers.id " +
+            "WHERE acquisitions.id = ?", id);
         await conn.end();
         if(rows.length == 1) {
             return {
                 id: rows[0].id,
                 expeditionId: rows[0].exp_id,
                 adventurerId: rows[0].adv_id,
+                expeditionName: rows[0].exp_name,
+                adventurerName: rows[0].adv_name,
                 name: rows[0].name,
                 date: new Date(rows[0].date),
                 sold: rows[0].sold,
@@ -109,8 +121,8 @@ let deleteAcquisitionById: (id: number) => Promise<Number> = async function(id: 
     try {
         let conn = await getConnection();
         let res = await conn.query("DELETE FROM acquisitions WHERE id = ?", id);
+        await conn.commit();
         await conn.end();
-        await conn.end
         return res;
     } catch(err) {
         throw err;

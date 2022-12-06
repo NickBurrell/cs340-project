@@ -19,20 +19,34 @@ function CreateAcqusitionModal(props: {expeditions: [Expedition], adventurers: [
     const [adventurerDropdownTitle, setAdventurerDropdownTitle] = useState<string>("Please select an Adventurer" );
 
     const expeditionOnSelect = (id: string | null, _: any) => {
-        console.log(id);
-        let exp = props.expeditions.find(e => e.id == parseInt(id!));
-        setExpeditionId(exp!.id);
-        setExpeditionDropdownTitle(exp!.name);
+        if (id === "NULL") {
+            setExpeditionId(null);
+            setExpeditionDropdownTitle("N/A");
+        } else {
+            let exp = props.expeditions.find(e => e.id == parseInt(id!));
+            setExpeditionId(exp!.id);
+            setExpeditionDropdownTitle(exp!.name);
+        }
     }
 
     const adventurerOnSelect = (id: string | null, _: any) => {
-        let exp = props.adventurers.find(e => e.id == parseInt(id!));
-        setAdventurerId(exp!.id);
-        setAdventurerDropdownTitle(exp!.name);
+        if(id === "NULL") {
+            setAdventurerId(null);
+            setAdventurerDropdownTitle("N/A");
+        } else {
+            let exp = props.adventurers.find(e => e.id == parseInt(id!));
+            setAdventurerId(exp!.id);
+            setAdventurerDropdownTitle(exp!.name);
+        }
     }
+
     let saveAndClose = () => {
-        props.onCreate({id:0,expeditionId, adventurerId, name, date, sold, price});
-        props.handleClose();
+        if (name === "NULL") {
+            alert(`Name cannot be "NULL"`);
+        } else {
+            props.onCreate({id: 0, expeditionId, adventurerId, name, date, sold, price});
+            props.handleClose();
+        }
     }
 
 
@@ -47,6 +61,7 @@ function CreateAcqusitionModal(props: {expeditions: [Expedition], adventurers: [
                         <Form.Group>
                             <DropdownButton variant={"light"} id={"acq-edit-exp-drop"} title={expeditionDropdownTitle}
                                             onSelect={expeditionOnSelect}>
+                                    <Dropdown.Item eventKey={"NULL"}>N/A</Dropdown.Item>
                                 {props.expeditions.map((exp, i) =>
                                     <Dropdown.Item eventKey={exp.id} key={i.toString()}>{exp.name}</Dropdown.Item>
                                 )}
@@ -54,6 +69,7 @@ function CreateAcqusitionModal(props: {expeditions: [Expedition], adventurers: [
                             <Form.Label>Adventurer</Form.Label>
                             <DropdownButton variant={"light"} id={"acq-edit-adv-drop"} title={adventurerDropdownTitle}
                                             onSelect={adventurerOnSelect}>
+                                <Dropdown.Item eventKey={"NULL"}>N/A</Dropdown.Item>
                                 {props.adventurers.map((adv, i) =>
                                     <Dropdown.Item eventKey={adv.id} key={i.toString()}>{adv.name}</Dropdown.Item>
                                 )}

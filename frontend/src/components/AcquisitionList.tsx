@@ -12,8 +12,8 @@ function AcquisitionList( props: {acquisitions: [Acquisition], expeditions:[Expe
             <thead>
                 <tr>
                     <td>Database ID</td>
-                    <td>Expedition ID</td>
-                    <td>Adventurer ID</td>
+                    <td>Expedition</td>
+                    <td>Adventurer</td>
                     <td>Name</td>
                     <td>Date</td>
                     <td>Sold</td>

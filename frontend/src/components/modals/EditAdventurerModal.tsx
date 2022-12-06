@@ -11,8 +11,12 @@ function EditAdventurerModal(props: {adventurer: Adventurer, isVisible: boolean,
     const [dkp, setDkp] = useState<number>(props.adventurer.dkp);
 
     let saveAndClose = () => {
-        props.onEdit({id: props.adventurer.id,name,job,rank,dkp});
-        props.handleClose();
+        if (name === "NULL" || name === "N/A") {
+            alert(`Name cannot be "NULL" or "N/A"`);
+        } else {
+            props.onEdit({id: props.adventurer.id, name, job, rank, dkp});
+            props.handleClose();
+        }
     }
 
     return(

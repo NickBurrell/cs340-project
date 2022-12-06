@@ -12,7 +12,8 @@ function DisbursementList( props: {disbursements: [Disbursement], adventurers: [
             <thead>
                 <tr>
                     <td>Database ID</td>
-                    <td>Roster ID</td>
+                    <td>Expedition Name</td>
+                    <td>Adventurer Name</td>
                     <td>Date</td>
                     <td>Quantity</td>
                     <td>Delete</td>

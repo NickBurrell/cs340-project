@@ -2,6 +2,7 @@ import Modal from "react-bootstrap/Modal";
 import Adventurer from "../../models/Adventurer";
 import {Button, Dropdown, DropdownButton, Form} from "react-bootstrap";
 import {useState} from "react";
+import truncDate from "../../util";
 
 function CreateDisbursementModal(props: {adventurers: [Adventurer], isVisible: boolean, handleClose: () => void, onCreate: Function}) {
 
@@ -25,7 +26,7 @@ function CreateDisbursementModal(props: {adventurers: [Adventurer], isVisible: b
         <>
             <Modal show={props.isVisible} onHide={props.handleClose}>
                 <Modal.Header>
-                    <Modal.Title>Creating New Adventurer</Modal.Title>
+                    <Modal.Title>Creating New Disbursement</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
@@ -38,7 +39,7 @@ function CreateDisbursementModal(props: {adventurers: [Adventurer], isVisible: b
                                 )}
                             </DropdownButton>
                             <Form.Label>Date</Form.Label>
-                            <Form.Control type={"text"} value={date.toString()} onChange={e => setDate(new Date(e.target.value))}/>
+                            <Form.Control type={"date"} value={truncDate(date)} onChange={e => setDate(new Date(e.target.value))}/>
                             <Form.Label>Quantity</Form.Label>
                             <Form.Control type={"number"} value={quantity.toString()} onChange={e => setQuantity(parseInt(e.target.value))}/>
                         </Form.Group>

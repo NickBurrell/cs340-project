@@ -20,7 +20,8 @@ function DisbursementEntry( props: {disbursement: Disbursement, adventurers: [Ad
     return (
         <tr>
             <td>{props.disbursement.id.toString()}</td>
-            <td>{props.disbursement.rosterId.toString()}</td>
+            <td>{props.disbursement.expeditionName}</td>
+            <td>{props.disbursement.adventurerName}</td>
             <td>{truncDate(props.disbursement.date)}</td>
             <td>{props.disbursement.quantity.toString()}</td>
             <td><TbTrash onClick={() => handleDeleteShow()} /></td>

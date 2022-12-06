@@ -14,17 +14,17 @@ function DeleteExpeditionRosterModal(props: {expeditionRoster: ExpeditionRoster,
         <>
             <Modal show={props.isVisible} onHide={props.handleClose}>
                 <Modal.Header>
-                    <Modal.Title>Delete ExpeditionRoster "{props.expeditionRoster.id}"</Modal.Title>
+                    <Modal.Title>Delete Expedition-Adventurer Association</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>Are you sure you would like to delete "{props.expeditionRoster.id}"</p>
+                    <p>Are you sure you would like to delete this Expedition-Adventurer association?</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant={"light"} onClick={props.handleClose}>
                         No
                     </Button>
                     <Button variant={"danger"} onClick={saveAndClose} type={"submit"}>
-                        Delete {props.expeditionRoster.id}
+                        Delete
                     </Button>
                 </Modal.Footer>
             </Modal>

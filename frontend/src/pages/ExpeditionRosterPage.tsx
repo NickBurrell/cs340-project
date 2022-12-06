@@ -3,7 +3,7 @@ import ExpeditionRosterList from '../components/ExpeditionRosterList';
 import { useState, useEffect } from 'react';
 import {useNavigate} from 'react-router-dom';
 import ExpeditionRoster from "../models/ExpeditionRoster";
-import {Button, Container, Row} from "react-bootstrap";
+import {Button, Col, Container, FloatingLabel, Form, InputGroup, Row} from "react-bootstrap";
 import CreateExpeditionRosterModal from "../components/modals/CreateExpeditionRosterModal";
 import Expedition from "../models/Expedition";
 import Adventurer from "../models/Adventurer";
@@ -20,6 +20,9 @@ function ExpeditionRostersPage(props: {}) {
     const [adventurers, setAdventurers] = useState<[Adventurer]>([] as unknown as [Adventurer]);
     const [show, setShow] = useState<boolean>(false);
 
+    const [expFilter, setExpFilter] = useState<string>("");
+    const [advFilter, setAdvFilter] = useState<string>("");
+
     const handleOpen  = () => setShow(true);
     const handleClose = () => setShow(false);
 
@@ -28,6 +31,13 @@ function ExpeditionRostersPage(props: {}) {
         const response = await fetch(`${BACKEND_ENDPOINT}/expedition_roster`);
         const expeditionRoster = await response.json();
         setExpeditionRosters(expeditionRoster);
+    }
+
+    const loadFilteredExpeditionRosters = async (expName: string, advName: string) => {
+        const response = await fetch(
+            `${BACKEND_ENDPOINT}/expedition_roster/expedition_roster?${new URLSearchParams({exp_name: expName, adv_name: advName})}`);
+        const expeditionRoster = await response.json();
+        setExpeditionRosters(expeditionRoster??[]);
     }
 
     // RETRIEVE the list of acquisitions
@@ -52,7 +62,6 @@ function ExpeditionRostersPage(props: {}) {
             },
         });
         if (resp.status === 201) {
-            navigation('/expeditionRosters');
             const resp = await fetch(`${BACKEND_ENDPOINT}/expedition_roster`);
             const json = await resp.json();
             setExpeditionRosters(json);
@@ -112,7 +121,47 @@ function ExpeditionRostersPage(props: {}) {
 
                         Here, you can adjust whether a given adventurer was present at a given expedition.
                     </p></Row>
-                    <Row><Button variant={"success"} onClick={_ => handleOpen()}> Create New Expedition Roster</Button></Row>
+                    <Form onSubmit={e => {
+                        e.stopPropagation();
+                        e.preventDefault();}}>
+                    <Row className="align-items-center">
+                        <Col md>
+                            <Button variant={"success"} onClick={_ => handleOpen()}> Create New Expedition Roster</Button>
+                        </Col>
+                        <Col md>
+                            <Row className="align-items-center">
+                                <InputGroup className={"mb-3"}>
+                                    <Form.Control id="exp-text-input" placeholder="Filter By Expedition Name" type="text"
+                                              onChange={e => {
+                                              setExpFilter(e.target.value);
+                                              loadFilteredExpeditionRosters(e.target.value, advFilter)
+                                          }}/>
+                                    <Button variant={"light"}  onClick={_ =>
+                                    {
+                                        (document.getElementById("exp-text-input") as any).value = "";
+                                        setExpFilter("");
+                                        loadFilteredExpeditionRosters( "", advFilter);
+                                    }}> Clear Filter</Button>
+                                </InputGroup>
+                            </Row>
+                        <Row className = "float-end">
+                            <InputGroup className={"mb-3"}>
+                                <Form.Control id="adv-text-input" placeholder="Filter By Adventurer Name" type="text"
+                                              onChange={e => {
+                                                  setAdvFilter(e.target.value);
+                                                  loadFilteredExpeditionRosters(expFilter, e.target.value)
+                                          }}/>
+                                    <Button variant={"light"}  onClick={_ =>
+                                    {
+                                        (document.getElementById("adv-text-input") as any).value = "";
+                                        setAdvFilter("");
+                                        loadFilteredExpeditionRosters(expFilter, "");
+                                    }}> Clear Filter</Button>
+                                </InputGroup>
+                        </Row>
+                        </Col>
+                    </Row>
+                </Form>
                     <Row><ExpeditionRosterList
                         expeditionRosters={expeditionRoster}
                         expeditions={expeditions}

@@ -3,14 +3,45 @@ import {
     createExpeditionRoster,
     deleteExpeditionRosterById,
     getAllExpeditionRosters,
+    getExpeditionRosterByAdventurerName,
+    getExpeditionRosterByExpeditionAndAdventurer,
+    getExpeditionRosterByExpeditionName,
     updateExpeditionRosterById
 } from "../models/ExpeditionRoster.model";
 
 const expeditionRosterRouter = express.Router();
 
 expeditionRosterRouter.get('/', (req, res) => {
-    getAllExpeditionRosters().then(advs => {
-        res.send(advs)
+    getAllExpeditionRosters().then(exps => {
+        res.send(exps)
+    }).catch(error => {
+        console.error(error);
+        res.send({Error: "Request to retrieve expeditionRosters failed"});
+    });
+});
+
+expeditionRosterRouter.get('/adventurers', (req, res) => {
+    getExpeditionRosterByAdventurerName((req.query as any).name).then(exps => {
+        res.send(exps)
+    }).catch(error => {
+        console.error(error);
+        res.send({Error: "Request to retrieve expeditionRosters failed"});
+    });
+});
+
+expeditionRosterRouter.get('/expeditions', (req, res) => {
+    getExpeditionRosterByExpeditionName((req.query as any).name).then(exps => {
+        res.send(exps)
+    }).catch(error => {
+        console.error(error);
+        res.send({Error: "Request to retrieve expeditionRosters failed"});
+    });
+});
+
+expeditionRosterRouter.get('/expedition_roster', (req, res) => {
+    console.log(req.query);
+    getExpeditionRosterByExpeditionAndAdventurer((req.query as any).exp_name, (req.query as any).adv_name).then(exps => {
+        res.send(exps)
     }).catch(error => {
         console.error(error);
         res.send({Error: "Request to retrieve expeditionRosters failed"});

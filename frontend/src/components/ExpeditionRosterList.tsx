@@ -13,8 +13,10 @@ function ExpeditionRosterList( props: {expeditionRosters: [ExpeditionRoster], ex
             <thead>
                 <tr>
                     <td>Database ID</td>
-                    <td>Expedition ID</td>
-                    <td>Adventurer ID</td>
+                    <td>Expedition</td>
+                    <td>Adventurer</td>
+                    <td>Delete</td>
+                    <td>Edit</td>
                 </tr>
             </thead>
             <tbody>

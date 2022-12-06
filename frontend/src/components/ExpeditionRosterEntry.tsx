@@ -21,8 +21,8 @@ function ExpeditionRosterEntry( props: {expeditionRoster: ExpeditionRoster, expe
     return (
         <tr>
             <td>{props.expeditionRoster.id.toString()}</td>
-            <td>{props.expeditionRoster.expeditionId.toString()}</td>
-            <td>{props.expeditionRoster.adventurerId.toString()}</td>
+            <td>{props.expeditionRoster.expeditionName}</td>
+            <td>{props.expeditionRoster.adventurerName}</td>
             <td><TbTrash onClick={() => handleDeleteShow()} /></td>
             <td><TbEditCircle onClick={() => handleEditShow()} /></td>
             <EditExpeditionRosterModal expeditionRoster={props.expeditionRoster} expeditions={props.expeditions} adventurers={props.adventurers}

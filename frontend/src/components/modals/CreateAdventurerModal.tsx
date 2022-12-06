@@ -11,8 +11,12 @@ function CreateAdventurerModal(props: {isVisible: boolean, handleClose: () => vo
     const [dkp, setDkp] = useState<number>(0);
 
     let saveAndClose = () => {
-        props.onCreate({id:0,name,job,rank,dkp});
-        props.handleClose();
+        if (name === "NULL" || name === "N/A") {
+            alert(`Name cannot be "NULL" or "N/A"`);
+        } else {
+            props.onCreate({id: 0, name, job, rank, dkp});
+            props.handleClose();
+        }
     }
 
     return(

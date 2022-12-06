@@ -14,17 +14,17 @@ function DeleteDisbursementModal(props: {disbursement: Disbursement, isVisible: 
         <>
             <Modal show={props.isVisible} onHide={props.handleClose}>
                 <Modal.Header>
-                    <Modal.Title>Delete Disbursement "{props.disbursement.id}"?</Modal.Title>
+                    <Modal.Title>Delete Disbursement for "{props.disbursement.adventurerName}"?</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>Are you sure you would like to delete "{props.disbursement.id}"</p>
+                    <p>Are you sure you would like to delete disbursement for "{props.disbursement.adventurerName}"</p>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant={"light"} onClick={props.handleClose}>
                         No
                     </Button>
                     <Button variant={"danger"} onClick={saveAndClose} type={"submit"}>
-                        Delete {props.disbursement.id}
+                        Delete
                     </Button>
                 </Modal.Footer>
             </Modal>

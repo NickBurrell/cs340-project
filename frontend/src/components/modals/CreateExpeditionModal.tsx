@@ -9,8 +9,12 @@ function CreateExpeditionModal(props: {isVisible: boolean, handleClose: () => vo
     const [date, setDate] = useState<Date>(new Date());
 
     let saveAndClose = () => {
-        props.onCreate({id:0,name,date});
-        props.handleClose();
+        if (name === "NULL" || name === "N/A") {
+            alert(`Name cannot be "NULL" or "N/A"`);
+        } else {
+            props.onCreate({id: 0, name, date});
+            props.handleClose();
+        }
     }
 
     return(
