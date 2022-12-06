@@ -12,7 +12,7 @@ function EditExpeditionRosterModal(props: {expeditionRoster: ExpeditionRoster, e
     const [adventurerId, setAdventurerId] = useState<number>(props.expeditionRoster.adventurerId);
 
     const [expeditionDropdownTitle, setExpeditionDropdownTitle] = useState<string>(props.expeditions
-        .find(e => e.id == props.expeditionRoster.expeditionId)!.name ?? "Please select an Expedition" );
+        .find(e => e.id == props.expeditionRoster.expeditionId)?.name ?? "Please select an Expedition" );
     const [adventurerDropdownTitle, setAdventurerDropdownTitle] = useState<string>(props.adventurers
         .find(e => e.id == props.expeditionRoster.adventurerId)?.name ?? "Please select an Adventurer" );
 

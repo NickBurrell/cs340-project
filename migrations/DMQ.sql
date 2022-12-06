@@ -17,7 +17,6 @@ DELETE FROM  adventurers where id = :id;
 
 -- Expeditions =================================================
 
-
 -- Create Expedition
 INSERT INTO expeditions (name, date) VALUE(:name, :date);
 
@@ -36,6 +35,13 @@ DELETE FROM  expeditions where id = :id;
 -- Expedition Rosters ==========================================
 
 -- Create Expedition Rosters
+INSERT INTO expedition_roster (exp_id, adv_id) VALUES (:exp_id, :adv_id);
+
+-- Create Expedition-Roster Relationship from Adventurer and Expedition ID
+INSERT INTO expedition_roster (exp_id, adv_id) VALUES (:exp, :adventurer.id);
+
+-- Create Expedition Roster Relationship from Adventurer ID and Expedition
+INSERT INTO expedition_roster (exp_id, adv_id) VALUES (:expedition.id, :adv);
 
 -- Get All Expedition Rosters
 SELECT expedition_roster.id, expedition_roster.exp_id, expedition_roster.adv_id,
@@ -51,6 +57,31 @@ SELECT expedition_roster.id, expedition_roster.exp_id, expedition_roster.adv_id,
         LEFT JOIN adventurers ON expedition_roster.adv_id = adventurers.id
         WHERE expedition_roster.id = :id;
 
+-- The following are used for validations on forms
+-- Get Expedition Rosters by Adventurer and Expedition Names
+SELECT expedition_roster.id, expedition_roster.exp_id, expedition_roster.adv_id,
+        expeditions.name AS exp_name, adventurers.name AS adv_name FROM expedition_roster
+        LEFT JOIN expeditions ON expedition_roster.exp_id = expeditions.id
+        LEFT JOIN adventurers ON expedition_roster.adv_id = adventurers.id
+        WHERE UPPER(expeditions.name) LIKE CONCAT(UPPER(:exp_name),'%') AND UPPER(adventurers.name) LIKE CONCAT(UPPER(:adv_name),'%');
+
+
+-- Get Expedition Rosters by Expedition Name
+SELECT expedition_roster.id, expedition_roster.exp_id, expedition_roster.adv_id,
+       expeditions.name AS exp_name, adventurers.name AS adv_name FROM expedition_roster
+       LEFT JOIN expeditions ON expedition_roster.exp_id = expeditions.id
+       LEFT JOIN adventurers ON expedition_roster.adv_id = adventurers.id
+WHERE UPPER(expeditions.name) LIKE CONCAT(UPPER(:exp_name),'%') ;
+
+
+-- Get Expedition Rosters by Adventurer Name
+SELECT expedition_roster.id, expedition_roster.exp_id, expedition_roster.adv_id,
+       expeditions.name AS exp_name, adventurers.name AS adv_name FROM expedition_roster
+       LEFT JOIN expeditions ON expedition_roster.exp_id = expeditions.id
+       LEFT JOIN adventurers ON expedition_roster.adv_id = adventurers.id
+WHERE UPPER(adventurers.name) LIKE CONCAT(UPPER(:adv_name),'%') ;
+
+
 -- Update Expedition Rosters
 UPDATE expedition_roster SET exp_id = :exp_id, adv_id = :adv_id WHERE id = :id;
 
@@ -60,6 +91,19 @@ DELETE FROM expedition_roster WHERE id = :id;
 -- Acquisitions ================================================
 
 -- Create Acquisition
+INSERT INTO acquisitions (name, exp_id, adv_id, price) VALUES (:name, :exp_id, :adv_id, :price);
+
+-- Associate Adventurer to an Acquisition
+UPDATE acquisitions SET adv_id = :adventurer.id WHERE id = :id;
+
+-- Associate Expedition to an Acquisitions
+UPDATE acquisitions SET exp_id = :expedition.id WHERE id = :id;
+
+-- Nullify association of Adventurer to Acquisition
+UPDATE acquisitions SET adv_id = null WHERE id = :id;
+
+-- Nullify association of Expedition to Acquisition
+UPDATE acquisitions SET exp_id = null WHERE id = :id;
 
 -- Get All Acquisitions
 SELECT acquisitions.id, acquisitions.name, acquisitions.date, acquisitions.exp_id,
